@@ -1,10 +1,13 @@
-import copy
-import time
-import random
-import numpy as np
+
+# tree.py
+import copy 
+import time 
+import random 
+import numpy as np 
 import os
 
 """
+
 face1 = np.zeros((3, 3))
 face2 = np.zeros((3, 3))
 face3 = np.zeros((3, 3))
@@ -54,6 +57,7 @@ class Rubik(object):
             self.face6[:, 2] = np.flip(temp2, -1)
             self.face5[0, :] = temp
         # return face1, face2, face3, face5, face6
+
     def face_2(self, flag):
         if flag:
             self.face2 = np.rot90(self.face2, 3)

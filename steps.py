@@ -26,7 +26,7 @@ def get_inverse_cube_move(move):
     if(move == "lf6"):
         return "rf6"
     return ""  
-# addface move
+# addface move 2
 
 def add_face_move(var, cube_moves,face_move_back):
     lp=len(cube_moves)-1
