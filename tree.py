@@ -24,6 +24,7 @@ class Node(object):
     def add_child(self, obj):
         self.children.append(obj)
 
+
 class Rubik(object):
     def __init__(self):
         self.face1 = None
@@ -335,9 +336,51 @@ def BuscarMayor(init, nodomayor):
                         nodomayor = nodo
     return init, nodomayor
 
+def add_face_move(var, cube_moves):
+    cube_moves.append(var)
+
 """MAIN"""
 
-def rotate_face(var, rubik):
+def rotate_face(var, rubik,cube_moves):
+    if(str(var) == "rf1"):   
+        rubik.face_1(True)
+        add_face_move(var,cube_moves)
+    if(str(var) == "rf2"):   
+        rubik.face_2(True)
+        add_face_move(var,cube_moves)
+    if(str(var) == "rf3"):   
+        rubik.face_3(True)
+        add_face_move(var,cube_moves)
+    if(str(var) == "rf4"):   
+        rubik.face_4(True)
+        add_face_move(var,cube_moves)
+    if(str(var) == "rf5"):   
+        rubik.face_5(True)
+        add_face_move(var,cube_moves)
+    if(str(var) == "rf6"):   
+        rubik.face_6(True)
+        add_face_move(var,cube_moves)
+
+    if(str(var) == "lf1"):   
+        rubik.face_1(False)
+        add_face_move(var,cube_moves)
+    if(str(var) == "lf2"):   
+        rubik.face_2(False)
+        add_face_move(var,cube_moves)
+    if(str(var) == "lf3"):   
+        rubik.face_3(False)
+        add_face_move(var,cube_moves)
+    if(str(var) == "lf4"):   
+        rubik.face_4(False)
+        add_face_move(var,cube_moves)
+    if(str(var) == "lf5"):   
+        rubik.face_5(False)
+        add_face_move(var,cube_moves)
+    if(str(var) == "lf6"):   
+        rubik.face_6(False)
+        add_face_move(var,cube_moves)
+
+def rotate_face2(var, rubik):
     if(str(var) == "rf1"):   
         rubik.face_1(True)
     if(str(var) == "rf2"):   
@@ -401,31 +444,78 @@ def instructions(var):
                 os.system('cls')
                 break
 
-def solve(var, rubik):
-    if str(var) == "solve cube" :
-        #while True:
-        print("el cubo se resolvera")
-        """
-        depth = 0
-        nodomayor = None
-        start_time = time.time()
-        Tree_path = []
-        
-        init = Node("initial", rubik.heuristic, None, rubik)
+def get_inverse_cube_move(move):
+    if(move == "rf1"):
+        return "lf1"       
+    if(move == "rf2"):
+        return "lf2"       
+    if(move == "rf3"):
+        return "lf3"       
+    if(move == "rf4"):
+        return "lf4"       
+    if(move == "rf5"):
+        return "lf5"       
+    if(move == "rf6"):
+        return "lf6"   
+    if(move == "lf1"):
+        return "rf1"   
+    if(move == "lf2"):
+        return "rf2"   
+    if(move == "lf3"):
+        return "rf3"   
+    if(move == "lf4"):
+        return "rf4"   
+    if(move == "lf5"):
+        return "rf5"   
+    if(move == "lf6"):
+        return "rf6"
+    return ""  
 
-        init, depth = addChild(init, depth) 
-        #print(rubik.heuristic())
-        #rubik.random_cube()
-        rubik.show()
-        while (init.value != 54):
-            init, depth = initTree(init, depth)
-            init, nodomayor = BuscarMayor(init, nodomayor)
-            init = copy.deepcopy(nodomayor);
-            print("mayor: ", nodomayor.value, " posicion Mayor: ", nodomayor.cube_pos, " padre: ", nodomayor.padre.cube_pos)
-            Tree_path = path(nodomayor, Tree_path)
-            print(Tree_path[::-1])  # voltea el vector
-        """
-        #print("--- {} seconds ---".format(time.time() - start_time))
+
+def solve(var, rubik,cube_moves):
+    print("el cubo se resolvera")
+    vec = []
+    if str(var) == "solve cube" :
+        longitud = len(cube_moves)
+
+        if longitud > 5:
+            cube_moves1 = np.flip(cube_moves, -1)
+
+            for move in cube_moves1:
+                vec.append(get_inverse_cube_move(move))
+                rotate_face2(get_inverse_cube_move(move) ,rubik)
+                try:
+                    os.system('cls')
+                    rubik.show()
+                    input("Press enter to continue")
+                except SyntaxError:
+                    pass
+                if longitud == 5:
+                    break
+                longitud = longitud - 1
+        if(longitud <= 5 ):
+            print("solve")
+            
+            depth = 0
+            nodomayor = None
+            #start_time = time.time()
+            Tree_path = []
+            
+            init = Node("initial", rubik.heuristic, None, rubik)
+
+            init, depth = addChild(init, depth) 
+            #print(rubik.heuristic())
+            #rubik.random_cube()
+            #rubik.show()
+            while (init.value != 54):
+                init, depth = initTree(init, depth)
+                init, nodomayor = BuscarMayor(init, nodomayor)
+                init = copy.deepcopy(nodomayor);
+                #print("mayor: ", nodomayor.value, " posicion Mayor: ", nodomayor.cube_pos, " padre: ", nodomayor.padre.cube_pos)
+                Tree_path = path(nodomayor, Tree_path)
+                #print(Tree_path[::-1])  # voltea el vector
+            
+            #print("--- {} seconds ---".format(time.time() - start_time))
 
 def heuristics(var, rubik):
     if str(var) == "heuristic":
@@ -438,7 +528,7 @@ def heuristics(var, rubik):
 if __name__ == '__main__':
     """MAIN"""
     #file = open("cubei.txt", "r") 
-    
+    cube_moves = []
     rubik = Rubik()
     rubik.initial()
 
@@ -453,9 +543,9 @@ if __name__ == '__main__':
             rubik = copy.deepcopy(rubik_initial)
 
         random_cube(var ,rubik)
-        rotate_face(var ,rubik)
+        rotate_face(var ,rubik,cube_moves)
         instructions(var)
-        solve(var,rubik)
+        solve(var,rubik,cube_moves)
         heuristics(var, rubik)
 
         rubik.show()
