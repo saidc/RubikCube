@@ -24,7 +24,6 @@ class Node(object):
     def add_child(self, obj):
         self.children.append(obj)
 
-
 class Rubik(object):
     def __init__(self):
         self.face1 = None
@@ -243,7 +242,6 @@ class Rubik(object):
                 r2 = False
             else:
                 r2 = True
-
             if r == 1:
                 self.face_1(r2)
             if r == 2:
@@ -266,8 +264,9 @@ class Rubik(object):
         self.face6 = np.array([61, 62, 63, 64, 65, 66, 67, 68, 69]).reshape((3, 3))
 
 def addChild(parent, depth):  # , rubik):
-    rubik_Copy = copy.deepcopy(parent.rubik)
+    
     for i in range(0, 12):
+        rubik_Copy = copy.deepcopy(parent.rubik)
         if (i == 0):
             rubik_Copy.face_1(True)
         elif (i == 1):
@@ -335,7 +334,19 @@ def BuscarMayor(init, nodomayor):
                         mayor = nodo.value
                         nodomayor = nodo
     return init, nodomayor
-
+def BuscarMayor(nodo, nodehigher):
+    mayor = 0
+    for i in range(0, 12):
+        for j in range(0, 12):
+            for k in range(0, 12):
+                for l in range(0, 12):
+                    nodo = init.children[i].children[j].children[k].children[l]
+                    # print("value: ", nodo.value," pos: ", nodo.cube_pos)
+                    # print("Esto es el valor del nodo: ", nodo.value)
+                    if mayor < nodo.value:
+                        mayor = nodo.value
+                        nodomayor = nodo
+    return init, nodomayor
 def add_face_move(var, cube_moves):
     cube_moves.append(var)
 
