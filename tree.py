@@ -471,7 +471,6 @@ def get_inverse_cube_move(move):
         return "rf6"
     return ""  
 
-
 def solve(var, rubik,cube_moves):
     print("el cubo se resolvera")
     vec = []
