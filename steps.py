@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 def get_inverse_cube_move(move):
     if(move == "rf1"):
@@ -28,7 +29,7 @@ def get_inverse_cube_move(move):
     return ""  
 # addface move
 
-def add_face_move(var, cube_moves,face_move_back):
+def add_face_move2(var, cube_moves,face_move_back):
     lp=len(cube_moves)-1
     if lp > 0 :
         #print(get_inverse_cube_move(var))
@@ -50,45 +51,46 @@ def add_face_move(var, cube_moves,face_move_back):
         print("se agrega el dato")
     return face_move_back
 
-def rotate_face(var, cube_moves,face_move_back):
+def add_face_move(var, cube_moves):
+    cube_moves.append(var)
+
+def rotate_face(var, cube_moves):
     if(str(var) == "rf1"):   
         #rubik.face_1(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "rf2"):   
         #rubik.face_2(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "rf3"):   
         #rubik.face_3(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "rf4"):   
         #rubik.face_4(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "rf5"):   
         #rubik.face_5(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "rf6"):   
         #rubik.face_6(True)
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
-
+        add_face_move(var,cube_moves)
     if(str(var) == "lf1"):   
         #rubik.face_1(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "lf2"):   
         #rubik.face_2(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "lf3"):   
         #rubik.face_3(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "lf4"):   
         #rubik.face_4(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "lf5"):   
         #rubik.face_5(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
+        add_face_move(var,cube_moves)
     if(str(var) == "lf6"):   
         #rubik.face_6(False
-        face_move_back = add_face_move(var,cube_moves,face_move_back)
-    return face_move_back
+        add_face_move(var,cube_moves)
 
 def rubik_show(var, cube_moves):
     if (str(var) == "show steps"):
@@ -97,13 +99,17 @@ def rubik_show(var, cube_moves):
         print(cube_moves)
         
 def solve(var , cube_moves):
+    vec = []
     if str(var) == "solve" :
         print("se resolvera el cubo")
+        longitud = len(cube_moves)
+        cube_moves1 = np.flip(cube_moves, -1)
+        for move in cube_moves1:
+            vec.append(get_inverse_cube_move(move))
+    return vec
 
 if __name__ == '__main__':
     """MAIN"""
-    global face_move_back
-    face_move_back = False
     cube_moves = []
     var = ""
     while(True):
@@ -111,10 +117,9 @@ if __name__ == '__main__':
         #print (file.read()) 
         if str(var) == "exit" :
             break
-        face_move_back = rotate_face(var ,cube_moves,face_move_back)
-        solve(var,cube_moves)
+        rotate_face(var , cube_moves)
+        solve(var, cube_moves)
         rubik_show(var,cube_moves)
-        print("face_move_back: ", face_move_back)
         var = input("Write the number of the face to be rotated or \n'exit' to exit \n")
         print ("you entered", var)
 
