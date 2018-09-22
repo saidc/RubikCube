@@ -1,3 +1,6 @@
 # RubikCube
 solve the rubik cube
-este programa fue hecho por: Gustavo contreras ,  Said Cortes calderon , Juan estevan ladron de guevara , Jhon jaime corro 
+este programa fue hecho por: 
+graficos : Gustavo contreras
+Opitimizacion : Said Cortes calderon 
+Diseno y logica: Juan estevan ladron de guevara,  Jhon jaime corro 
