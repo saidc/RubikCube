@@ -1,39 +1,28 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Sep 20 21:34:19 2018
 
-@author: GUSTAVO
-"""
-from quat import *
-from geometry import *
 
-import pygame
-from pygame.locals import *
+import  copy 
+import  time 
+import  random 
+import  numpy   as np 
+import  os
+import  pygame
+from    quat           import *
+from    geometry       import *
+from    pygame.locals  import *
+from    OpenGL.GL      import *
+from    OpenGL.GLU     import *
 
-from OpenGL.GL import *
-from OpenGL.GLU import *
 
-import numpy as np
 value = 0
+
 #1 blanco
 #2 azul
 #3 amarillo
 #4 verde
 #5 naranja
 #6 rojo
-#matriz1 = np.array([6, 1, 3, 5, 6, 3, 4, 4, 1]).reshape(3, 3)
-#matriz2 = np.array([3, 1, 2, 2, 2, 4, 1, 3, 6]).reshape(3, 3)
-#matriz3 = np.array([2, 2, 1, 4, 5, 3, 5, 1, 1]).reshape(3, 3)
-#matriz4 = np.array([3, 5, 5, 2, 4, 3, 3, 6, 4]).reshape(3, 3)
-#matriz5 = np.array([2, 6, 2, 5, 3, 2, 6, 1, 5]).reshape(3, 3)
-#matriz6 = np.array([6, 6, 4, 4, 1, 5, 5, 6, 4]).reshape(3, 3)
 
-#matriz1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1]).reshape(3, 3)
-#matriz2 = np.array([2, 2, 2, 2, 2, 2, 2, 2, 2]).reshape(3, 3)
-#matriz3 = np.array([3, 3, 3, 3, 3, 3, 3, 3, 3]).reshape(3, 3)
-#matriz4 = np.array([4, 4, 4, 4, 4, 4, 4, 4, 4]).reshape(3, 3)
-#matriz5 = np.array([5, 5, 5, 5, 5, 5, 5, 5, 5]).reshape(3, 3)
-#matriz6 = np.array([6, 6, 6, 6, 6, 6, 6, 6, 6]).reshape(3, 3)
 
 Sticker11 = (
     # 0 0
@@ -183,55 +172,14 @@ up_face = (
     # (4, 0, 3, 7)  # Bottom
 )
 
-'''
-    These pattern are for each set of edge pieces and corner
-    pieces on each face. They will shift when the faces are
-    rotated so these patterns will keep track of them.
-     _______________
-    |  1 |  2 |  2 |
-    |____|____|____|
-    | 1  |    |  3 |
-    |____|____|____|
-    |  0 |  0 |  3 |
-    |____|____|____|
 
-'''
-# face_patterns = [
-#     [0, 1, 2, 3],  # 0 Front
-#     [0, 1, 2, 3],  # 1 Back
-#     [0, 1, 2, 3],  # 2 Left
-#     [0, 1, 2, 3],  # 3 Right
-#     [0, 1, 2, 3],  # 4 Up
-#     [0, 1, 2, 3],  # 5 Down
-# ]
-#
-# front_edges = [
-#     [0, 1],  # x
-#     [0, 3]   # y
-# ]
-#
-# back_edges = [
-#     [2, 3],  # x
-#     [1, 2]   # y
-# ]
-#
-# left_edges = [
-#     [0, 1],  # y
-#     [0, 1]   # z
-# ]
-#
-# right_edges = [
-#     [2, 3],  # y
-#     [2, 3]   # z
-# ]
-
-def draw_face():
-    glBegin(GL_LINES)
-    glColor3fv((0.5, 0.5, 0.5))
-    for edge in cube_edges:
-        for vertex in edge:
-            glVertex3fv(up_face[vertex])
-            glEnd()
+#def draw_face():
+#    glBegin(GL_LINES)
+#    glColor3fv((0.5, 0.5, 0.5))
+#    for edge in cube_edges:
+#        for vertex in edge:
+#            glVertex3fv(up_face[vertex])
+#            glEnd()
 
 def SelectColor(num):
         if num == 1:
@@ -251,46 +199,55 @@ def draw_stickers(matriz):
     glBegin(GL_QUADS)
     for v in range(len(Sticker11)):
       value = matriz[0][0]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker11[v])
       
     for v in range(len(Sticker12)):
       value = matriz[0][1]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker12[v])
       
     for v in range(len(Sticker13)):
       value = matriz[0][2]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker13[v])
       
     for v in range(len(Sticker21)):
       value = matriz[1][0]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker21[v])
       
     for v in range(len(Sticker22)):
       value = matriz[1][1]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker22[v])
       
     for v in range(len(Sticker23)):
       value = matriz[1][2]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker23[v])
       
     for v in range(len(Sticker31)):
       value = matriz[2][0]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker31[v])
       
     for v in range(len(Sticker32)):
       value = matriz[2][1]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker32[v])
       
     for v in range(len(Sticker33)):
       value = matriz[2][2]
+      value = int(value/10)
       SelectColor(value)
       glVertex3fv(Sticker33[v])  
      
@@ -316,13 +273,13 @@ def cube(rubik):
             glVertex3fv(cube_verts[vertex])
     glEnd()
     #
+
 #1 blanco
 #2 azul
 #3 amarillo
 #4 verde
 #5 naranja
 #6 rojo
-
 
     # White
     #glColor3fv((1.0, 1.0, 1.0))
@@ -363,28 +320,7 @@ def cube(rubik):
     for edge in cube_edges:
         for vertex in edge:
             glVertex3fv(cube_pieces[vertex])
-    # for edge in cube_edges:
-    #     for vertex in edge:
-    #         glVertex3fv(up_face[vertex])
     glEnd()
-
-
-
-import copy 
-import time 
-import random 
-import numpy as np 
-import os
-
-"""
-
-face1 = np.zeros((3, 3))
-face2 = np.zeros((3, 3))
-face3 = np.zeros((3, 3))
-face4 = np.zeros((3, 3))
-face5 = np.zeros((3, 3))
-face6 = np.zeros((3, 3))
-"""
 
 
 class Node(object):
@@ -408,14 +344,14 @@ class Rubik(object):
     def face_1(self, flag):
         if flag:
             self.face1 = np.rot90(self.face1, 3)
-            temp = copy.deepcopy(self.face3[:, 0])  # This saves the first column thatt is being updated
+            temp = copy.deepcopy(self.face3[:, 0])  # This saves the first column that is being updated
             self.face3[:, 0] = self.face2[2, :]
             temp2 = copy.deepcopy(self.face5[0, :])
             self.face5[0, :] = np.flip(temp, -1)
             temp = copy.deepcopy(self.face6[:, 2])
             self.face6[:, 2] = temp2
             self.face2[2, :] = np.flip(temp, -1)
-
+           
         else:
             self.face1 = np.rot90(self.face1)
             # Update face1 and face2
@@ -426,18 +362,17 @@ class Rubik(object):
             temp = copy.deepcopy(self.face6[:, 2])
             self.face6[:, 2] = np.flip(temp2, -1)
             self.face5[0, :] = temp
-        # return face1, face2, face3, face5, face6
 
     def face_2(self, flag):
         if flag:
-            self.face2 = np.rot90(self.face2,3)
-            temp = copy.deepcopy(self.face3[0, :])  # This saves the first column thatt is being updated
-            self.face3[0, :] = self.face4[2, :]
+            self.face2 = np.rot90(self.face2, 3)
+            temp = copy.deepcopy(self.face3[0, :])  # This saves the first column that is being updated
+            self.face3[0, :] = np.flip(self.face4[2, :], -1)
             temp2 = copy.deepcopy(self.face1[0, :])
             self.face1[0, :] = temp
             temp = copy.deepcopy(self.face6[0, :])
             self.face6[0, :] = temp2
-            self.face4[2, :] = temp
+            self.face4[2, :] = np.flip(temp, -1)
 
         else:
             self.face2 = np.rot90(self.face2)
@@ -498,36 +433,36 @@ class Rubik(object):
     def face_5(self, flag):
         if flag:
             self.face5 = np.rot90(self.face5, 3)
-            temp = copy.deepcopy(self.face3[2, :])  # This saves the first column thatt is being updated
+            temp = copy.deepcopy(self.face3[2, :])  # This saves the first column that is being updated
             self.face3[2, :] = self.face1[2, :]
             temp2 = copy.deepcopy(self.face4[0, :])
-            self.face4[0, :] = temp
+            self.face4[0, :] = np.flip(temp, -1)
             temp = copy.deepcopy(self.face6[2, :])
-            self.face6[2, :] = temp2
+            self.face6[2, :] = np.flip(temp2, -1)
             self.face1[2, :] = temp
 
         else:
             self.face5 = np.rot90(self.face5)
             # Update face1 and face2
             temp = copy.deepcopy(self.face3[2, :])  # This saves the first column that is being updated
-            self.face3[2, :] = np.flip(self.face4[0, :],-1)
+            self.face3[2, :] = np.flip(self.face4[0, :], -1)
             temp2 = copy.deepcopy(self.face1[2, :])
             self.face1[2, :] = temp
             temp = copy.deepcopy(self.face6[2, :])
             self.face6[2, :] = temp2
-            self.face4[0, :] = np.flip(temp,-1)
+            self.face4[0, :] = np.flip(temp, -1)
         # return face1, face3, face4, face5, face6
     def face_6(self, flag):
         if flag:
             self.face6 = np.rot90(self.face6, 3)
-            temp = copy.deepcopy(self.face1[:, 0])  # This saves the first column thatt is being updated
+            temp = copy.deepcopy(self.face1[:, 0])  # This saves the first column that is being updated
             self.face1[:, 0] = self.face2[:, 0]
             temp2 = copy.deepcopy(self.face5[:, 0])
             self.face5[:, 0] = temp
             temp = copy.deepcopy(self.face4[:, 0])
             self.face4[:, 0] = temp2
             self.face2[:, 0] = temp
-
+            
         else:
             self.face6 = np.rot90(self.face6)
             temp = copy.deepcopy(self.face5[:, 0])  # This saves the first column that is being updated
@@ -553,30 +488,24 @@ class Rubik(object):
         print(self.face6)
 
     def heuristic(self):
-        #counter = 0
-        #counter += (self.face1 == np.array([11, 12, 13, 14, 15, 16, 17, 18, 19]).reshape((3, 3))).sum()
-        #counter += (self.face2 == np.array([21, 22, 23, 24, 25, 26, 27, 28, 29]).reshape((3, 3))).sum()
-        #counter += (self.face3 == np.array([31, 32, 33, 34, 35, 36, 37, 38, 39]).reshape((3, 3))).sum()
-        #counter += (self.face4 == np.array([41, 42, 43, 44, 45, 46, 47, 48, 49]).reshape((3, 3))).sum()
-        #counter += (self.face5 == np.array([51, 52, 53, 54, 55, 56, 57, 58, 59]).reshape((3, 3))).sum()
-        #counter += (self.face6 == np.array([61, 62, 63, 64, 65, 66, 67, 68, 69]).reshape((3, 3))).sum()
-        #return counter
-       
         counter = 0
-        counter += (self.face1 == np.array([1, 1, 1, 1, 1, 1, 1, 1, 1]).reshape((3, 3))).sum()
-        counter += (self.face2 == np.array([2, 2, 2, 2, 2, 2, 2, 2, 2]).reshape((3, 3))).sum()
-        counter += (self.face3 == np.array([3, 3, 3, 3, 3, 3, 3, 3, 3]).reshape((3, 3))).sum()
-        counter += (self.face4 == np.array([4, 4, 4, 4, 4, 4, 4, 4, 4]).reshape((3, 3))).sum()
-        counter += (self.face5 == np.array([5, 5, 5, 5, 5, 5, 5, 5, 5]).reshape((3, 3))).sum()
-        counter += (self.face6 == np.array([6, 6, 6, 6, 6, 6, 6, 6, 6]).reshape((3, 3))).sum()
+        counter += (self.face1 == np.array([11, 12, 13, 14, 15, 16, 17, 18, 19]).reshape((3, 3))).sum()
+        counter += (self.face2 == np.array([21, 22, 23, 24, 25, 26, 27, 28, 29]).reshape((3, 3))).sum()
+        counter += (self.face3 == np.array([31, 32, 33, 34, 35, 36, 37, 38, 39]).reshape((3, 3))).sum()
+        counter += (self.face4 == np.array([41, 42, 43, 44, 45, 46, 47, 48, 49]).reshape((3, 3))).sum()
+        counter += (self.face5 == np.array([51, 52, 53, 54, 55, 56, 57, 58, 59]).reshape((3, 3))).sum()
+        counter += (self.face6 == np.array([61, 62, 63, 64, 65, 66, 67, 68, 69]).reshape((3, 3))).sum()
         return counter
        
-
-
-
-
-
-
+       # counter = 0
+       # counter += (self.face1 == np.array([1, 1, 1, 1, 1, 1, 1, 1, 1]).reshape((3, 3))).sum()
+       # counter += (self.face2 == np.array([2, 2, 2, 2, 2, 2, 2, 2, 2]).reshape((3, 3))).sum()
+       # counter += (self.face3 == np.array([3, 3, 3, 3, 3, 3, 3, 3, 3]).reshape((3, 3))).sum()
+       # counter += (self.face4 == np.array([4, 4, 4, 4, 4, 4, 4, 4, 4]).reshape((3, 3))).sum()
+       # counter += (self.face5 == np.array([5, 5, 5, 5, 5, 5, 5, 5, 5]).reshape((3, 3))).sum()
+       # counter += (self.face6 == np.array([6, 6, 6, 6, 6, 6, 6, 6, 6]).reshape((3, 3))).sum()
+       # return counter
+       
     def heuristic2(self):
         counter = 0
         if np.count_nonzero(self.face1 == 1) == 9:
@@ -592,28 +521,6 @@ class Rubik(object):
         if np.count_nonzero(self.face6 == 6) == 9:
             counter += 1
         return counter
-
-    def random_cube(self):
-        random_cube2(2)
-
-    def random_cube2(self, num_steps):
-        for i in range(1, num_steps):
-            r = random.randint(1, 6)
-
-            r2 = random.choice([True, False])
-
-            if r == 1:
-                self.face_1(r2)
-            if r == 2:
-                self.face_2(r2)
-            if r == 3:
-                self.face_3(r2)
-            if r == 4:
-                self.face_4(r2)
-            if r == 5:
-                self.face_5(r2)
-            if r == 6:
-                self.face_6(r2)
     
     def backtracking(self, sneaky):
         #sneaky.append([r, r2])
@@ -646,23 +553,24 @@ class Rubik(object):
                 self.face_6(r2)
 
     def initial(self):
-        #self.face1 = np.array([11, 12, 13, 14, 15, 16, 17, 18, 19]).reshape((3, 3))
-        #self.face2 = np.array([21, 22, 23, 24, 25, 26, 27, 28, 29]).reshape((3, 3))
-        #self.face3 = np.array([31, 32, 33, 34, 35, 36, 37, 38, 39]).reshape((3, 3))
-        #self.face4 = np.array([41, 42, 43, 44, 45, 46, 47, 48, 49]).reshape((3, 3))
-        #self.face5 = np.array([51, 52, 53, 54, 55, 56, 57, 58, 59]).reshape((3, 3))
-        #self.face6 = np.array([61, 62, 63, 64, 65, 66, 67, 68, 69]).reshape((3, 3))
+        self.face1 = np.array([11, 12, 13, 14, 15, 16, 17, 18, 19]).reshape((3, 3))
+        self.face2 = np.array([21, 22, 23, 24, 25, 26, 27, 28, 29]).reshape((3, 3))
+        self.face3 = np.array([31, 32, 33, 34, 35, 36, 37, 38, 39]).reshape((3, 3))
+        self.face4 = np.array([41, 42, 43, 44, 45, 46, 47, 48, 49]).reshape((3, 3))
+        self.face5 = np.array([51, 52, 53, 54, 55, 56, 57, 58, 59]).reshape((3, 3))
+        self.face6 = np.array([61, 62, 63, 64, 65, 66, 67, 68, 69]).reshape((3, 3))
+    
+        #self.face1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1]).reshape(3, 3)
+        #self.face2 = np.array([2, 2, 2, 2, 2, 2, 2, 2, 2]).reshape(3, 3)
+        #self.face3 = np.array([3, 3, 3, 3, 3, 3, 3, 3, 3]).reshape(3, 3)
+        #self.face4 = np.array([4, 4, 4, 4, 4, 4, 4, 4, 4]).reshape(3, 3)
+        #self.face5 = np.array([5, 5, 5, 5, 5, 5, 5, 5, 5]).reshape(3, 3)
+        #self.face6 = np.array([6, 6, 6, 6, 6, 6, 6, 6, 6]).reshape(3, 3)
         
-        self.face1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1]).reshape(3, 3)
-        self.face2 = np.array([2, 2, 2, 2, 2, 2, 2, 2, 2]).reshape(3, 3)
-        self.face3 = np.array([3, 3, 3, 3, 3, 3, 3, 3, 3]).reshape(3, 3)
-        self.face4 = np.array([4, 4, 4, 4, 4, 4, 4, 4, 4]).reshape(3, 3)
-        self.face5 = np.array([5, 5, 5, 5, 5, 5, 5, 5, 5]).reshape(3, 3)
-        self.face6 = np.array([6, 6, 6, 6, 6, 6, 6, 6, 6]).reshape(3, 3)
-        
-def addChild(parent, depth):
-    rubik_Copy = copy.deepcopy(parent.rubik)
+def addChild(parent, depth):  # , rubik):
+    #rubik_Copy = copy.deepcopy(parent.rubik)
     for i in range(0, 12):
+        rubik_Copy = copy.deepcopy(parent.rubik)
         if (i == 0):
             rubik_Copy.face_1(True)
         elif (i == 1):
@@ -732,8 +640,10 @@ def BuscarMayor(init, nodomayor):
     return init, nodomayor
 
 """MAIN"""
+def add_face_move(var, cube_moves):
+    cube_moves.append(var)
 
-def rotate_face(var, rubik):
+def rotate_face2(var, rubik):
     if(str(var) == "rf1"):   
         rubik.face_1(True)
     if(str(var) == "rf2"):   
@@ -760,47 +670,133 @@ def rotate_face(var, rubik):
     if(str(var) == "lf6"):   
         rubik.face_6(False)
 
-def random_cube(var, rubik):
-    if str(var) == "random cube" :
-        rubik.random_cube2(10)
+def rotate_face(event, rubik, cube_moves):
 
-def instructions(var):
-    if str(var) == "instructions" :
-        while True:
-            os.system('cls')
+    if event.key == pygame.K_t:   
+        rotate_face2("rf1", rubik)
+        add_face_move("rf1",cube_moves)
+    if event.key == pygame.K_f:   
+        rotate_face2("rf2", rubik)
+        add_face_move("rf2",cube_moves)
+    if event.key == pygame.K_o:
+        rotate_face2("rf3", rubik)
+        add_face_move("rf3",cube_moves)
+    if event.key == pygame.K_h:   
+        rotate_face2("rf4", rubik)
+        add_face_move("rf4",cube_moves)
+    if event.key == pygame.K_k:
+        rotate_face2("rf5", rubik)
+        add_face_move("rf5",cube_moves)
+    if event.key == pygame.K_u:   
+        rotate_face2("rf6", rubik)
+        add_face_move("rf6",cube_moves)
 
-            print("comandos usados:\n")
-            print("--> movimiento de caras:\n")
-            print("     -> cara 1:\n")
-            print("          * Derecha  : 'rf1'\n")
-            print("          * Izquierda: 'lf1'\n")
-            print("     -> cara 2:\n")
-            print("          * Derecha  : 'rf2'\n")
-            print("          * Izquierda: 'lf2'\n")
-            print("     -> cara 3:\n")
-            print("          * Derecha  : 'rf3'\n")
-            print("          * Izquierda: 'lf3'\n")
-            print("     -> cara 4:\n")
-            print("          * Derecha  : 'rf4'\n")
-            print("          * Izquierda: 'lf4'\n")
-            print("     -> cara 5:\n")
-            print("          * Derecha  : 'rf5'\n")
-            print("          * Izquierda: 'lf5'\n")
-            print("     -> cara 6:\n")
-            print("          * Derecha  : 'rf6'\n")
-            print("          * Izquierda: 'lf6'\n")
-            print("--> Generar un cubo aleatoriamente: 'random cube'\n")
-            print("--> Generar un el cubo inicial o resetear el cubo:\n 'reset'\n")
-            print("--> Resolver el cubo actual paso a paso: 'solve'\n")
-            var = input("WRITE 'back' TO BACK TO DE RUBIK CUBE \n")
-            if str(var) == "back":
-                os.system('cls')
-                break
+    if event.key == pygame.K_y:  
+        rotate_face2("lf1", rubik)
+        add_face_move("lf1",cube_moves)
+    if event.key == pygame.K_g:   
+        rotate_face2("lf2", rubik)
+        add_face_move("lf2",cube_moves)
+    if event.key == pygame.K_p:   
+        rotate_face2("lf3", rubik)
+        add_face_move("lf3",cube_moves)
+    if event.key == pygame.K_j:
+        rotate_face2("lf4", rubik)
+        add_face_move("lf4",cube_moves)
+    if event.key == pygame.K_l:  
+        rotate_face2("lf5", rubik)
+        add_face_move("lf5",cube_moves)
+    if event.key == pygame.K_i:   
+        rotate_face2("lf6", rubik)
+        add_face_move("lf6",cube_moves)
 
-def solve(var, rubik):
-    if str(var) == "solve cube" :
+def random_cube(event, rubik, cube_moves ,num):
+    if event.key == pygame.K_r: # Random Cube
+        rubik.random_cube2(num)
+        for i in range(1, num_steps):
+            r = random.randint(1, 6)
+            r2 = random.choice([True, False])
+            if r == 1:
+                if r2:
+                    add_face_move("rf1",cube_moves)
+                else:
+                    add_face_move("lf1",cube_moves)
+                rubik.face_1(r2)
+            if r == 2:
+                if r2:
+                    add_face_move("rf2",cube_moves)
+                else:
+                    add_face_move("lf2",cube_moves)
+                rubik.face_2(r2)
+            if r == 3:
+                if r2:
+                    add_face_move("rf3",cube_moves)
+                else:
+                    add_face_move("lf3",cube_moves)
+                rubik.face_3(r2)
+            if r == 4:
+                if r2:
+                    add_face_move("rf4",cube_moves)
+                else:
+                    add_face_move("lf4",cube_moves)
+                rubik.face_4(r2)
+            if r == 5:
+                if r2:
+                    add_face_move("rf5",cube_moves)
+                else:
+                    add_face_move("lf5",cube_moves)
+                rubik.face_5(r2)
+            if r == 6:
+                if r2:
+                    add_face_move("rf6",cube_moves)
+                else:
+                    add_face_move("lf6",cube_moves)
+                rubik.face_6(r2)
+
+def get_inverse_cube_move(move):
+    if(move == "rf1"):
+        return "lf1"       
+    if(move == "rf2"):
+        return "lf2"       
+    if(move == "rf3"):
+        return "lf3"       
+    if(move == "rf4"):
+        return "lf4"       
+    if(move == "rf5"):
+        return "lf5"       
+    if(move == "rf6"):
+        return "lf6"   
+    if(move == "lf1"):
+        return "rf1"   
+    if(move == "lf2"):
+        return "rf2"   
+    if(move == "lf3"):
+        return "rf3"   
+    if(move == "lf4"):
+        return "rf4"   
+    if(move == "lf5"):
+        return "rf5"   
+    if(move == "lf6"):
+        return "rf6"
+    return ""  
+
+def solve(event, rubik, cube_moves):
+    if event.key == pygame.K_e:
         #while True:
         print("el cubo se resolvera")
+        longitud = len(cube_moves)
+        vec = []
+        #if longitud > 5:
+        cube_moves1 = np.flip(cube_moves, -1)
+        for move in cube_moves1:
+            vec.append(get_inverse_cube_move(move))
+            rotate_face2(get_inverse_cube_move(move) ,rubik)
+            time.sleep(1)
+            os.system('cls')
+            rubik.show()
+            #if longitud == 5:
+            #    break
+            #longitud = longitud - 1
         """
         depth = 0
         nodomayor = None
@@ -831,17 +827,18 @@ def heuristics(var, rubik):
         except SyntaxError:
             pass
 
-
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (1024, 720)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.display.set_caption('PyCube')
     
     rubik = Rubik()
     rubik.initial()
+
     rubik_initial = copy.deepcopy(rubik)
     var = ""
+
     # Using depth test to make sure closer colors are shown over further ones
     glEnable(GL_DEPTH_TEST)
     glDepthFunc(GL_LESS)
@@ -850,120 +847,42 @@ def main():
     glMatrixMode(GL_PROJECTION)
     gluPerspective(45, (display[0] / display[1]), 0.5, 40)
     glTranslatef(0.0, 0.0, -17.5)
-
     # set initial rotation
-    # glRotate(90, 1, 0, 0)
-    # glRotate(-15, 0, 0, 1)
-    # glRotate(15, 1, 0, 0)
 
     inc_x = 0
     inc_y = 0
     accum = (1, 0, 0, 0)
     zoom = 1
+    cube_moves = []
     rubik.show()
+    solve_RubikCube = False
+    vec = []
+    cube_moves1 = []
+    file = None
+
     while True:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            
             if event.type == pygame.KEYDOWN:
                 # Rotating about the x axis
-                if event.key == pygame.K_t:
-                    var = 'rf1'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_y:
-                    var = 'lf1'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_u:
-                    var = 'rf6'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_i:
-                    var = 'lf6'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_o:
-                    var = 'rf3'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_p:
-                    var = 'lf3'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_f:  ### TIENE PROBLEMAS####
-                    var = 'rf2'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_g: 
-                    var = 'lf2'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_h:  
-                    var = 'rf4'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_j: 
-                    var = 'lf4'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_k:  ###tiene problemas###
-                    var = 'rf5'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
-                if event.key == pygame.K_l: 
-                    var = 'lf5'
-                    random_cube(var ,rubik)
-                    rotate_face(var ,rubik)
-                    instructions(var)
-                    solve(var,rubik)
-                    heuristics(var, rubik)
-                    rubik.show()
+                os.system('cls')
+                #random_cube(event, rubik,cube_moves, 10) # press R to solve the cube
+                rotate_face(event, rubik, cube_moves)
+                #instructions(var)
+
+                #solve(event,rubik,cube_moves)
+                if event.key == pygame.K_e:
+                    solve_RubikCube = True
+                    cube_moves1 = np.flip(cube_moves, -1)
+                    file = open("RubikCube_solve.txt","w")
+
+
+                rubik.show()
+
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
                     inc_x = pi / 500
                 if event.key == pygame.K_DOWN or event.key == pygame.K_s:
@@ -1007,8 +926,26 @@ def main():
                     if zoom > 0.2:
                         zoom -= 0.05
                     # print('scroll down', zoom)
-            
+        
+        if solve_RubikCube:
+            if len(vec) < len(cube_moves1):
+                os.system('cls')
+                vecpos = len(vec)
+                file.write(get_inverse_cube_move(cube_moves1[vecpos]))
+                file.write("\n")
+                vec.append(get_inverse_cube_move(cube_moves1[vecpos]))
+                rotate_face2(get_inverse_cube_move(cube_moves1[vecpos]) ,rubik)
                 
+                print(vec)
+                print(cube_moves1)
+                time.sleep(1)
+                rubik.show()
+            else:
+                solve_RubikCube = False
+                vec = []
+                cube_moves1 = []
+                cube_moves = []
+                file.close()
 
         # Get relative movement of mouse coordinates and update x and y incs
         if pygame.mouse.get_pressed()[0] == 1:
@@ -1018,61 +955,17 @@ def main():
             inc_y = -tmp_x * pi / 450
 
         pygame.mouse.get_rel()  # prevents the cube from instantly rotating to a newly clicked mouse coordinate
-
         rot_x = normalize(axisangle_to_q((1.0, 0.0, 0.0), inc_x))
         rot_y = normalize(axisangle_to_q((0.0, 1.0, 0.0), inc_y))
-
         accum = q_mult(accum, rot_x)
         accum = q_mult(accum, rot_y)
-
         glMatrixMode(GL_MODELVIEW)
         glLoadMatrixf(q_to_mat4(accum))
         glScalef(zoom, zoom, zoom)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)\
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         cube(rubik)
         
-        #if str(var) == "exit" :
-        #    break
-        #if str(var) == "reset":
-        #    rubik = copy.deepcopy(rubik_initial)
-
-        # random_cube(var ,rubik)
-        # rotate_face(var ,rubik)
-        # instructions(var)
-        # solve(var,rubik)
-        # heuristics(var, rubik)
-
-        # if event.key == pygame.K_t:
-        #     var = 'rf1'
-        # if event.key == pygame.K_y:
-        #     var = 'lf1'
-        # if event.key == pygame.K_u:
-        #     var = 'rf2'
-        # if event.key == pygame.K_i:
-        #     var = 'lf2'
-        # if event.key == pygame.K_o:
-        #     var = 'rf3'
-        # if event.key == pygame.K_p:
-        #     var = 'lf3'
-        # if event.key == pygame.K_f:
-        #     var = 'rf4'
-        # if event.key == pygame.K_g:
-        #     var = 'lf4'
-        # if event.key == pygame.K_h:
-        #     var = 'rf5'
-        # if event.key == pygame.K_j:
-        #     var = 'lf5'
-        # if event.key == pygame.K_k:
-        #     var = 'rf6'
-        # if event.key == pygame.K_l:
-        #     var = 'lf6'
-        
-        #var = input("Write the number of the face to be rotated or \n'exit' to exit \n")
-        #print ("you entered", var)
-
-        # drawFace()
-        # draw_axis()
         pygame.display.flip()
-        # pygame.time.wait(1)
+
 main()
